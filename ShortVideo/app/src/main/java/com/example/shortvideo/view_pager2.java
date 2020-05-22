@@ -17,8 +17,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class view_pager2 extends AppCompatActivity implements ItemAdapter.ListItemClickListener {
-
+public class view_pager2 extends AppCompatActivity implements PagerAdapter.ListItemClickListener {
     private static String TAG = "ViewPager2";
     private static List<VideoInfo> videoInfoList;
     private ViewPager2 viewPager2;

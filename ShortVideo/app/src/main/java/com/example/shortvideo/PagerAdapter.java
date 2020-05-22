@@ -19,11 +19,11 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
 
     private List<VideoInfo> videoInfoList;
     private int mNumberItems;
-    private final ItemAdapter.ListItemClickListener mOnClickListener;
+    private final ListItemClickListener mOnClickListener;
     private static int viewHolderCount;
 
 
-    public PagerAdapter(ItemAdapter.ListItemClickListener listener) {
+    public PagerAdapter(ListItemClickListener listener) {
         mOnClickListener = listener;
         viewHolderCount = 0;
         mNumberItems = 0;
@@ -91,6 +91,16 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
             if (mOnClickListener != null) {
                 mOnClickListener.onListItemClick(clickedPosition);
             }
+            if (videoView.isPlaying())
+                videoView.pause();
+            else
+                videoView.start();
+//                videoView.resume();
+
         }
+    }
+
+    public interface ListItemClickListener {
+        void onListItemClick(int clickedItemIndex);
     }
 }
