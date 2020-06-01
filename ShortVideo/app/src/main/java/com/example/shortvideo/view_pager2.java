@@ -4,10 +4,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Adapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -41,6 +43,8 @@ public class view_pager2 extends AppCompatActivity implements PagerAdapter.ListI
         viewPager2 = findViewById(R.id.viewPager2);
         mAdapter = new PagerAdapter(this);
         viewPager2.setAdapter(mAdapter);
+
+
     }
 
 

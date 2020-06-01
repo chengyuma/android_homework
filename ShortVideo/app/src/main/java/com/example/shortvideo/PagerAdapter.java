@@ -6,10 +6,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -71,10 +76,16 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
     public class VideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public VideoView videoView;
+        public ImageView play_arrow;
+        public ImageView avatar;
+        public TextView likecount;
 
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
             videoView = itemView.findViewById(R.id.vp_videoView);
+//            play_arrow=itemView.findViewById(R.id.play_arrow);
+            avatar=itemView.findViewById(R.id.avatar);
+            likecount=itemView.findViewById(R.id.likecount);
 
             itemView.setOnClickListener(this);
         }
@@ -83,6 +94,15 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
             VideoInfo videoInfo = videoInfoList.get(position);
             videoView.setVideoURI(Uri.parse(videoInfo.feedurl));
             videoView.start();
+            Context context=avatar.getContext();
+            Glide.with(context)
+                    .load(videoInfo.avatar)
+                .apply(RequestOptions.circleCropTransform())
+//                .bitmapTransform(new CropSquareTransformation())
+//                    .apply(RequestOptions.centerCropTransform())
+//                .apply(RequestOptions.bitmapTransform(new CropSquareTransformation()))
+                    .into(avatar);
+            likecount.setText(videoInfo.likecount);
         }
 
         @Override
@@ -91,12 +111,15 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
             if (mOnClickListener != null) {
                 mOnClickListener.onListItemClick(clickedPosition);
             }
-            if (videoView.isPlaying())
+            if (videoView.isPlaying()) {
                 videoView.pause();
-            else
+//                play_arrow.setVisibility(View.VISIBLE);
+            }
+            else {
                 videoView.start();
+//                play_arrow.setVisibility(View.GONE);
 //                videoView.resume();
-
+            }
         }
     }
 

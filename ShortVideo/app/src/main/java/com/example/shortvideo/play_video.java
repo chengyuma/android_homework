@@ -39,7 +39,7 @@ public class play_video extends AppCompatActivity {
         videoView = findViewById(R.id.videoView1);
         assert videoInfo != null;
         videoView.setVideoURI(Uri.parse(videoInfo.feedurl));
-//        videoView.start();
+        videoView.start();
 
 //        videoView.setOnClickListener(v -> {
 //            if (videoView.isPlaying())
