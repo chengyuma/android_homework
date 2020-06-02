@@ -1,5 +1,6 @@
 package com.example.shortvideo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -79,30 +80,37 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
         public ImageView play_arrow;
         public ImageView avatar;
         public TextView likecount;
+        public TextView nickname;
+        public TextView description;
 
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
             videoView = itemView.findViewById(R.id.vp_videoView);
 //            play_arrow=itemView.findViewById(R.id.play_arrow);
-            avatar=itemView.findViewById(R.id.avatar);
-            likecount=itemView.findViewById(R.id.likecount);
+            avatar = itemView.findViewById(R.id.avatar);
+            likecount = itemView.findViewById(R.id.likecount);
+            nickname = itemView.findViewById(R.id.nickname);
+            description = itemView.findViewById(R.id.description);
 
             itemView.setOnClickListener(this);
         }
 
+        @SuppressLint("SetTextI18n")
         public void bind(int position) {
             VideoInfo videoInfo = videoInfoList.get(position);
             videoView.setVideoURI(Uri.parse(videoInfo.feedurl));
             videoView.start();
-            Context context=avatar.getContext();
+            Context context = avatar.getContext();
             Glide.with(context)
                     .load(videoInfo.avatar)
-                .apply(RequestOptions.circleCropTransform())
+                    .apply(RequestOptions.circleCropTransform())
 //                .bitmapTransform(new CropSquareTransformation())
 //                    .apply(RequestOptions.centerCropTransform())
 //                .apply(RequestOptions.bitmapTransform(new CropSquareTransformation()))
                     .into(avatar);
             likecount.setText(videoInfo.likecount);
+            nickname.setText("@" + videoInfo.nickname);
+            description.setText(videoInfo.description);
         }
 
         @Override
@@ -114,8 +122,7 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
             if (videoView.isPlaying()) {
                 videoView.pause();
 //                play_arrow.setVisibility(View.VISIBLE);
-            }
-            else {
+            } else {
                 videoView.start();
 //                play_arrow.setVisibility(View.GONE);
 //                videoView.resume();
