@@ -4,12 +4,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
-import android.widget.Adapter;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.VideoView;
 
 import java.util.List;
 
@@ -43,10 +43,17 @@ public class view_pager2 extends AppCompatActivity implements PagerAdapter.ListI
         viewPager2 = findViewById(R.id.viewPager2);
         mAdapter = new PagerAdapter(this);
         viewPager2.setAdapter(mAdapter);
-
-
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                VideoView videoView=findViewById(R.id.vp_videoView);
+                videoView.start();
+                ImageView play_icon=findViewById(R.id.play_icon);
+                play_icon.setVisibility(View.GONE);
+            }
+        });
     }
-
 
     private void getVideoInfo() {
         Retrofit retrofit = new Retrofit.Builder()

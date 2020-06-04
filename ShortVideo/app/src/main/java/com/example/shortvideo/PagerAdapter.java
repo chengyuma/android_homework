@@ -1,13 +1,18 @@
 package com.example.shortvideo;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -15,9 +20,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.Resource;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
+
+import android.os.Handler;
+
+import java.util.logging.LogRecord;
 
 public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHolder> {
 
@@ -77,22 +87,35 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
     public class VideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public VideoView videoView;
-        public ImageView play_arrow;
         public ImageView avatar;
         public TextView likecount;
         public TextView nickname;
         public TextView description;
+        public ImageView heart_icon;
+        public ImageView heart_icon_red;
+        public RelativeLayout heart_layout;
+        public ImageView play_icon;
+        private int clickCount = 0;
+        private Handler handler;
+        private boolean like = false;
 
+        @SuppressLint("ClickableViewAccessibility")
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
             videoView = itemView.findViewById(R.id.vp_videoView);
-//            play_arrow=itemView.findViewById(R.id.play_arrow);
             avatar = itemView.findViewById(R.id.avatar);
             likecount = itemView.findViewById(R.id.likecount);
             nickname = itemView.findViewById(R.id.nickname);
             description = itemView.findViewById(R.id.description);
-
+            heart_icon = itemView.findViewById(R.id.heart_icon);
+            heart_icon_red=itemView.findViewById(R.id.heart_icon_red);
+            heart_icon_red.setVisibility(View.GONE);
+            heart_layout=itemView.findViewById(R.id.heart_layout);
+            play_icon = itemView.findViewById(R.id.play_icon);
+            play_icon.setVisibility(View.GONE);
+            heart_layout.setOnClickListener(this);
             itemView.setOnClickListener(this);
+            handler = new Handler();
         }
 
         @SuppressLint("SetTextI18n")
@@ -104,28 +127,107 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
             Glide.with(context)
                     .load(videoInfo.avatar)
                     .apply(RequestOptions.circleCropTransform())
-//                .bitmapTransform(new CropSquareTransformation())
-//                    .apply(RequestOptions.centerCropTransform())
-//                .apply(RequestOptions.bitmapTransform(new CropSquareTransformation()))
                     .into(avatar);
-            likecount.setText(videoInfo.likecount);
+
             nickname.setText("@" + videoInfo.nickname);
             description.setText(videoInfo.description);
+            if (like) {
+                int num = Integer.parseInt(videoInfo.likecount);
+                num++;
+                likecount.setText(String.valueOf(num));
+            } else {
+                likecount.setText(videoInfo.likecount);
+            }
         }
 
         @Override
         public void onClick(View v) {
+            Log.i(TAG, v.toString());
+            if (v == heart_layout) {
+                if (like) {
+                    int num = Integer.parseInt(likecount.getText().toString());
+                    num--;
+                    likecount.setText(String.valueOf(num));
+//                    heart_icon.setImageResource(R.mipmap.heart_icon);
+                    ObjectAnimator scaleXAnimator=ObjectAnimator.ofFloat(heart_icon_red,"scaleX",1,0);
+                    ObjectAnimator scaleYAnimator=ObjectAnimator.ofFloat(heart_icon_red,"scaleY",1,0);
+                    AnimatorSet animatorSet=new AnimatorSet();
+                    animatorSet.playTogether(scaleXAnimator,scaleYAnimator);
+                    animatorSet.setDuration(150);
+                    animatorSet.start();
+                    like = false;
+                } else {
+                    int num = Integer.parseInt(likecount.getText().toString());
+                    num++;
+                    likecount.setText(String.valueOf(num));
+//                    heart_icon.setImageResource(R.mipmap.heart_icon_red);
+                    heart_icon_red.setVisibility(View.VISIBLE);
+                    ObjectAnimator scaleXAnimator=ObjectAnimator.ofFloat(heart_icon_red,"scaleX",0.3f,1.3f);
+                    ObjectAnimator scaleYAnimator=ObjectAnimator.ofFloat(heart_icon_red,"scaleY",0.3f,1.3f);
+                    AnimatorSet animatorSet=new AnimatorSet();
+                    animatorSet.playTogether(scaleXAnimator,scaleYAnimator);
+                    animatorSet.setDuration(150);
+                    animatorSet.start();
+                    scaleXAnimator=ObjectAnimator.ofFloat(heart_icon_red,"scaleX",1.3f,1);
+                    scaleYAnimator=ObjectAnimator.ofFloat(heart_icon_red,"scaleY",1.3f,1);
+                    animatorSet.playTogether(scaleXAnimator,scaleYAnimator);
+                    animatorSet.start();
+
+                    like = true;
+                }
+            } else {
+                clickCount++;
+                int timeout = 400;
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (clickCount == 1) {
+                            if (videoView.isPlaying()) {
+                                videoView.pause();
+                                play_icon.setVisibility(View.VISIBLE);
+                                ObjectAnimator scaleXAnimator=ObjectAnimator.ofFloat(play_icon,"scaleX",2,1);
+                                ObjectAnimator scaleYAnimator=ObjectAnimator.ofFloat(play_icon,"scaleY",2,1);
+                                ObjectAnimator alphaAnimator=ObjectAnimator.ofFloat(play_icon,"alpha",0.7f,1);
+                                AnimatorSet animatorSet=new AnimatorSet();
+                                animatorSet.playTogether(scaleXAnimator,scaleYAnimator,alphaAnimator);
+                                animatorSet.setDuration(150);
+                                animatorSet.start();
+                            } else {
+                                videoView.start();
+                                ObjectAnimator alphaAnimator=ObjectAnimator.ofFloat(play_icon,"alpha",1,0);
+                                alphaAnimator.setDuration(200);
+                                alphaAnimator.start();
+                            }
+                        } else if (clickCount == 2) {
+                            if (!like) {
+                                int num = Integer.parseInt(likecount.getText().toString());
+                                num++;
+                                likecount.setText(String.valueOf(num));
+                                heart_icon_red.setVisibility(View.VISIBLE);
+                                ObjectAnimator scaleXAnimator=ObjectAnimator.ofFloat(heart_icon_red,"scaleX",0.3f,1.3f);
+                                ObjectAnimator scaleYAnimator=ObjectAnimator.ofFloat(heart_icon_red,"scaleY",0.3f,1.3f);
+                                AnimatorSet animatorSet=new AnimatorSet();
+                                animatorSet.playTogether(scaleXAnimator,scaleYAnimator);
+                                animatorSet.setDuration(150);
+                                animatorSet.start();
+                                scaleXAnimator=ObjectAnimator.ofFloat(heart_icon_red,"scaleX",1.3f,1);
+                                scaleYAnimator=ObjectAnimator.ofFloat(heart_icon_red,"scaleY",1.3f,1);
+                                animatorSet.playTogether(scaleXAnimator,scaleYAnimator);
+                                animatorSet.start();
+                            }
+
+                            like = true;
+                        }
+                        handler.removeCallbacksAndMessages(null);
+                        //清空handler延时，并防内存泄漏
+                        clickCount = 0;//计数清零
+                    }
+                }, timeout);//延时timeout后执行run方法中的代码
+            }
+
             int clickedPosition = getAdapterPosition();
             if (mOnClickListener != null) {
                 mOnClickListener.onListItemClick(clickedPosition);
-            }
-            if (videoView.isPlaying()) {
-                videoView.pause();
-//                play_arrow.setVisibility(View.VISIBLE);
-            } else {
-                videoView.start();
-//                play_arrow.setVisibility(View.GONE);
-//                videoView.resume();
             }
         }
     }

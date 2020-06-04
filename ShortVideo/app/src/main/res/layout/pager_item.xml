@@ -25,14 +25,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <!--            <de.hdodenhof.circleimageview.CircleImageView-->
-            <!--                android:layout_width="50dp"-->
-            <!--                android:layout_height="50dp"-->
-            <!--                android:layout_alignParentStart="true"-->
-            <!--                android:layout_alignParentTop="true"-->
-            <!--                android:src="@mipmap/header_icon_2"-->
-            <!--                app:civ_border_color="@android:color/white"-->
-            <!--                app:civ_border_width="2dp" />-->
             <ImageView
                 android:id="@+id/avatar"
                 android:layout_width="50dp"
@@ -51,12 +43,30 @@
                 android:tint="@android:color/white" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/heart_layout">
+
+            <ImageView
+                android:id="@+id/heart_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19dp"
+                android:src="@mipmap/heart_icon" />
+
+            <ImageView
+                android:id="@+id/heart_icon_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19dp"
+                android:src="@mipmap/heart_icon_red" />
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/likecount"
             android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:drawableTop="@mipmap/heart_icon"
+            android:layout_height="24dp"
             android:gravity="center"
             android:text="1.6w"
             android:textColor="@android:color/white" />
@@ -102,5 +112,13 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
+    <ImageView
+        android:id="@+id/play_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:alpha="100"
+        android:focusable="true"
+        android:src="@mipmap/play_arrow" />
 
 </RelativeLayout>
