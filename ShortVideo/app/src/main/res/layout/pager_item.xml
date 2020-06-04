@@ -120,5 +120,17 @@
         android:alpha="100"
         android:focusable="true"
         android:src="@mipmap/play_arrow" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/red_heart"
+            android:src="@mipmap/heart_icon_red"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
