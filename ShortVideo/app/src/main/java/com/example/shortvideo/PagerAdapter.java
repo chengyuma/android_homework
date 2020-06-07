@@ -183,14 +183,14 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
                                 ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(red_heart, "scaleY", 2.5f, 1.5f);
                                 ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(red_heart, "alpha", 0.7f, 1);
                                 AnimatorSet animatorSet = new AnimatorSet();
-                                animatorSet.playTogether(scaleXAnimator, scaleYAnimator,alphaAnimator);
+                                animatorSet.playTogether(scaleXAnimator, scaleYAnimator, alphaAnimator);
                                 animatorSet.setDuration(300);
                                 animatorSet.start();
-                                scaleXAnimator = ObjectAnimator.ofFloat(red_heart, "scaleX", 1.5f, 3f);
-                                scaleYAnimator = ObjectAnimator.ofFloat(red_heart, "scaleY", 1.5f, 3f);
+                                scaleXAnimator = ObjectAnimator.ofFloat(red_heart, "scaleX", 1.5f, 4.3f);
+                                scaleYAnimator = ObjectAnimator.ofFloat(red_heart, "scaleY", 1.5f, 4.3f);
                                 alphaAnimator = ObjectAnimator.ofFloat(red_heart, "alpha", 1, 0);
-                                animatorSet.playTogether(scaleXAnimator, scaleYAnimator,alphaAnimator);
-                                animatorSet.setDuration(450);
+                                animatorSet.playTogether(scaleXAnimator, scaleYAnimator, alphaAnimator);
+                                animatorSet.setDuration(500);
                                 animatorSet.start();
                             }
                             handler.removeCallbacksAndMessages(null);
@@ -234,7 +234,6 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
                     int num = Integer.parseInt(likecount.getText().toString());
                     num--;
                     likecount.setText(String.valueOf(num));
-//                    heart_icon.setImageResource(R.mipmap.heart_icon);
                     ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(heart_icon_red, "scaleX", 1, 0);
                     ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(heart_icon_red, "scaleY", 1, 0);
                     AnimatorSet animatorSet = new AnimatorSet();
@@ -246,7 +245,6 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
                     int num = Integer.parseInt(likecount.getText().toString());
                     num++;
                     likecount.setText(String.valueOf(num));
-//                    heart_icon.setImageResource(R.mipmap.heart_icon_red);
                     heart_icon_red.setVisibility(View.VISIBLE);
                     ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(heart_icon_red, "scaleX", 0.3f, 1.3f);
                     ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(heart_icon_red, "scaleY", 0.3f, 1.3f);

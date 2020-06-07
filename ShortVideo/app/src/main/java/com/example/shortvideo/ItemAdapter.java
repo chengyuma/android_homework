@@ -29,7 +29,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.NumberViewHold
     public ItemAdapter(ListItemClickListener listener) {
         mOnClickListener = listener;
         viewHolderCount = 0;
-        mNumberItems=0;
+        mNumberItems = 0;
     }
 
     @NonNull
@@ -45,8 +45,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.NumberViewHold
         NumberViewHolder viewHolder = new NumberViewHolder(view);
 
         viewHolderCount++;
-        Log.i(TAG,"onCreateView:"+videoInfoList.toString());
-        Log.i(TAG,"onCreateView");
+        Log.i(TAG, "onCreateView:" + videoInfoList.toString());
+        Log.i(TAG, "onCreateView");
         return viewHolder;
     }
 
@@ -56,7 +56,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.NumberViewHold
         VideoInfo curr = videoInfoList.get(position);
         numberViewHolder.video_description.setText(curr.description);
         // TODO make the cover fit
-        Context context1=numberViewHolder.cover1.getContext();
+        Log.i(TAG, curr.feedurl);
+        Context context1 = numberViewHolder.cover1.getContext();
         Glide.with(context1)
                 .setDefaultRequestOptions(
                         new RequestOptions()
@@ -66,7 +67,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.NumberViewHold
                 .load(curr.feedurl)
                 .apply(RequestOptions.centerCropTransform())
                 .into(numberViewHolder.cover1);
-        Context context2=numberViewHolder.cover2.getContext();
+        Context context2 = numberViewHolder.cover2.getContext();
         Glide.with(context2)
                 .setDefaultRequestOptions(
                         new RequestOptions()
@@ -79,7 +80,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.NumberViewHold
                 .apply(RequestOptions.centerCropTransform())
 //                .apply(RequestOptions.bitmapTransform(new CropSquareTransformation()))
                 .into(numberViewHolder.cover2);
-        Log.i(TAG,"onBindVie:"+videoInfoList.toString());
+        Log.i(TAG, "onBindVie:" + videoInfoList.toString());
     }
 
     @Override
@@ -91,8 +92,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.NumberViewHold
         mNumberItems = videoInfoList1.size();
         videoInfoList = videoInfoList1;
         notifyDataSetChanged();
-        Log.i(TAG,videoInfoList.toString());
-        Log.i(TAG,"setData");
+        Log.i(TAG, videoInfoList.toString());
+        Log.i(TAG, "setData");
     }
 
     public class NumberViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -104,8 +105,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.NumberViewHold
         public NumberViewHolder(@NonNull View itemView) {
             super(itemView);
             video_description = itemView.findViewById(R.id.rv_description);
-            cover1= itemView.findViewById(R.id.rv_cover1);
-            cover2=itemView.findViewById(R.id.rv_cover2);
+            cover1 = itemView.findViewById(R.id.rv_cover1);
+            cover2 = itemView.findViewById(R.id.rv_cover2);
 
             itemView.setOnClickListener(this);
         }

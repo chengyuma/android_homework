@@ -69,12 +69,15 @@ public class view_pager2 extends AppCompatActivity implements PagerAdapter.ListI
                     Log.i(TAG, "successful");
                 if (response.body() != null) {
                     List<VideoInfo> videoInfoList = response.body();
-                    List<VideoInfo> res = response.body();
+                    for(VideoInfo temp : videoInfoList) {
+                        temp.avatar = temp.avatar.replace("http", "https");
+                        temp.feedurl = temp.feedurl.replace("http", "https");
+                    }
                     mAdapter.setData(videoInfoList);
                     mAdapter.notifyDataSetChanged();
                     Log.i(TAG, response.body().toString());
-                    VideoInfo temp = res.get(1);
-                    Log.i(TAG, temp.toString());
+                    VideoInfo temp = videoInfoList.get(1);
+                    Log.i(TAG, temp.feedurl);
                 }
             }
 
