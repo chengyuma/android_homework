@@ -55,7 +55,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.NumberViewHold
         numberViewHolder.bind(position);
         VideoInfo curr = videoInfoList.get(position);
         numberViewHolder.video_description.setText(curr.description);
-        // TODO make the cover fit
         Log.i(TAG, curr.feedurl);
         Context context1 = numberViewHolder.cover1.getContext();
         Glide.with(context1)
@@ -75,10 +74,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.NumberViewHold
                                 .centerCrop()
                 )
                 .load(curr.feedurl)
-//                .apply(RequestOptions.circleCropTransform())
-//                .bitmapTransform(new CropSquareTransformation())
                 .apply(RequestOptions.centerCropTransform())
-//                .apply(RequestOptions.bitmapTransform(new CropSquareTransformation()))
                 .into(numberViewHolder.cover2);
         Log.i(TAG, "onBindVie:" + videoInfoList.toString());
     }

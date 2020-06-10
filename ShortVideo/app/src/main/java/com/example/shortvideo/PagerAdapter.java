@@ -22,10 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.gson.internal.$Gson$Preconditions;
 
 import java.util.List;
-
 import android.os.Handler;
 
 public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHolder> {
@@ -161,15 +159,6 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.VideoViewHol
                                     animatorSet.start();
                                     like = true;
                                 }
-
-//                                ImageView imageView = new ImageView(itemView.getContext());
-//                                imageView.setImageDrawable(itemView.getResources().getDrawable(R.mipmap.heart_icon_red));  //这里如果用background属性，添加在边缘图片会变形
-////                                ViewGroup viewGroup= (ViewGroup) itemView.getParent();
-////                                viewGroup.addView(imageView);
-//                                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(56, 48);
-//                                layoutParams.leftMargin = (int) event.getX() - 56 / 2;
-//                                layoutParams.topMargin = (int) event.getY() - 48 / 2;
-//                                imageView.setLayoutParams(layoutParams);
                                 ViewGroup.MarginLayoutParams margin = new ViewGroup.MarginLayoutParams(red_heart.getLayoutParams());
                                 int dpTop = (int) event.getY() - 56 / 2;
                                 int dpLeft = (int) event.getX() - 48 / 2;

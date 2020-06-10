@@ -22,7 +22,6 @@ public class recycler_view extends AppCompatActivity implements ItemAdapter.List
 
     private static String TAG = "RecyclerView";
     private static List<VideoInfo> videoInfoList;
-
     private ItemAdapter mAdapter;
     private RecyclerView recyclerView;
 
@@ -69,8 +68,8 @@ public class recycler_view extends AppCompatActivity implements ItemAdapter.List
                 if (response.isSuccessful())
                     Log.i(TAG, "successful");
                 if (response.body() != null) {
-                    List<VideoInfo> videoInfoList = response.body();
-                    for(VideoInfo temp : videoInfoList) {
+                    videoInfoList=response.body();
+                    for (VideoInfo temp : videoInfoList) {
                         temp.avatar = temp.avatar.replace("http", "https");
                         temp.feedurl = temp.feedurl.replace("http", "https");
                     }

@@ -4,7 +4,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +24,7 @@ public class play_video extends AppCompatActivity {
         setContentView(R.layout.activity_play_video);
 
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.hide();
 
         getWindow().setFlags(
@@ -41,12 +41,6 @@ public class play_video extends AppCompatActivity {
         videoView.setVideoURI(Uri.parse(videoInfo.feedurl));
         videoView.start();
 
-//        videoView.setOnClickListener(v -> {
-//            if (videoView.isPlaying())
-//                videoView.pause();
-//            else
-//                videoView.start();
-//        });
         videoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
